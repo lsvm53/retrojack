@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Retrojack</title>
+    <link rel="stylesheet" href="stylesheet.css">
+    <script src="blackjack.js" defer></script>
+</head>
+<body>
+
+    <h2>Dealer: <span id="dealerCount"></span></h2>
+    <div id="hidden">
+        <img src="./cards/BACK.png">
+    </div>
+
+    <div id="dealerHand">
+        
+    </div>
+
+    <h2>Player: <span id="yourCount"></span></h2>
+    <div id="yourHand">
+        <img src="./cards/10-D.png">
+        <img src="./cards/10-D.png">
+    </div>
+    
+
+    <br>
+    <button id="hit">
+        Hit
+    </button>
+
+    <button id="stay">
+        Stay
+    </button>
+
+    <p id="outcome"></p>
+</body>
+</html>

@@ -1,0 +1,22 @@
+html {
+    height: 100%;
+    /* overflow-y: hidden;
+    overflow-x: hidden; */
+}
+
+body {
+    text-align: center;
+    height: 100%;
+}
+
+#dealerHand img{
+    height: 250px;
+}
+
+#yourHand img{
+    height: 250px;
+}
+
+#hidden img {
+    height: 250px;
+}
