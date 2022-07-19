@@ -17,6 +17,13 @@ body {
     height: 250px;
 }
 
+#hidden {
+    display: inline-block;
+}
 #hidden img {
     height: 250px;
+}
+
+#dealerHand {
+    display: inline-block;
 }

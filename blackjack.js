@@ -66,6 +66,29 @@ function startGame() {
     }
 
     console.log(dealerSum);
+
+
+    // loop for giving the player his/her first two cards
+    for (let count = 0; count < 2; count++) {
+
+        // code for adding a card
+        let newCardImage = document.createElement("img");
+        let card = deck.pop();
+        newCardImage.src = "./cards/" + card + ".png";
+        yourSum += getValue(card);
+        yourAceCount += checkAce(card);
+        document.getElementById("yourHand").append(newCardImage);
+    }
+    
+    // value for checking the sum of the user
+    console.log(yourSum);
+
+    document.getElementById("hit").addEventListener("click", hit);
+    document.getElementById("stay").addEventListener("click", stay);
+
+
+
+    
 }
 
 function getValue(card) {
@@ -87,4 +110,68 @@ function checkAce(card) {
         return 1;
     }
     return 0;
+}
+
+function hit() {
+    if (canHit == false) {
+        return;
+    }
+
+    let newCardImage = document.createElement("img");
+        let card = deck.pop();
+        newCardImage.src = "./cards/" + card + ".png";
+        yourSum += getValue(card);
+        yourAceCount += checkAce(card);
+        document.getElementById("yourHand").append(newCardImage);
+        
+
+    // console.log(yourSum);
+    
+    
+    if (decreaseAceValue(yourSum, yourAceCount) > 21) {
+        canHit = false;
+    }    
+    
+}
+
+function decreaseAceValue(yourSum, yourAceValue) {
+    while (yourSum > 21 && yourAceValue > 0) {
+        yourSum -= 10;
+        yourAceCount -= 1; 
+        
+    }
+
+    return yourSum;
+}
+
+
+function stay() {
+    dealerSum = decreaseAceValue(dealerSum, dealerAceCount);
+    yourSum = decreaseAceValue(yourSum, yourAceCount);
+
+    canHit = false;
+    document.getElementById("hidden").src = "./cards/" + hidden + ".png";
+
+    let outputMessage = "";
+
+    if (yourSum > 21) {
+        message = "you lose!";
+    } else if (dealerSum > 21) {
+        message = "You win!!!"
+        // add to player's score
+    } else if (yourSum == dealerSum) {
+        message = "Tie!!"
+    } else {
+        if (yourSum <= dealerSum) {
+            message = "you lose!"
+        } else {
+            message = "you win!!!"
+            // add to player's score
+        }
+    }
+
+
+    document.getElementById("dealerCount").innerHTML = dealerSum;
+    document.getElementById("yourCount").innerHTML = yourSum;
+    document.getElementById("outcome").innerHTML = message;
 }
