@@ -48,25 +48,31 @@ function shuffle() {
 }
 
 function startGame() {
+
+    // takes first card and stores as the hidden card of the dealer
     hidden = deck.pop();
+
+    // adds sum of the hidden card to  dealerSum 
     dealerSum += getValue(hidden);
+
+    // checks to see the no. of aces and stores value accordingly
     dealerAceCount += checkAce(hidden);
 
     // for checking the value of the hidden card
-    // console.log(hidden);
-    // console.log(dealerSum);
-
-    while (dealerSum < 17) {
-        let newCardImage = document.createElement("img");
-        let card = deck.pop();
-        newCardImage.src = "./cards/" + card + ".png";
-        dealerSum += getValue(card);
-        dealerAceCount += checkAce(card);
-        document.getElementById("dealerHand").append(newCardImage);
-    }
-
+    console.log(hidden);
     console.log(dealerSum);
 
+
+    // this is where I'm facing an issue. The back.png is not showing even though the src is right.
+    document.getElementById("hidden").src="./cards/BACK.png";
+
+    // code for adding the second card to the dealer
+    let newCardImage = document.createElement("img");
+    let card = deck.pop();
+    newCardImage.src = "./cards/" + card + ".png";
+    dealerSum += getValue(card);
+    dealerAceCount += checkAce(card);
+    document.getElementById("dealerHand").append(newCardImage);
 
     // loop for giving the player his/her first two cards
     for (let count = 0; count < 2; count++) {
@@ -81,13 +87,10 @@ function startGame() {
     }
     
     // value for checking the sum of the user
-    console.log(yourSum);
+    //console.log(yourSum);
 
     document.getElementById("hit").addEventListener("click", hit);
     document.getElementById("stay").addEventListener("click", stay);
-
-
-
     
 }
 
@@ -104,6 +107,12 @@ function getValue(card) {
 
     return parseInt(number);
 }
+
+function getSuit(card) {
+    let cardData = card.split("-") //returns an array containing the number, and then the suit.
+    return cardData[1];
+}
+
 
 function checkAce(card) {
     if (card[0] == "A") {
@@ -130,6 +139,7 @@ function hit() {
     
     if (decreaseAceValue(yourSum, yourAceCount) > 21) {
         canHit = false;
+        document.getElementById("hit").style.visibility = "hidden"
     }    
     
 }
@@ -146,11 +156,27 @@ function decreaseAceValue(yourSum, yourAceValue) {
 
 
 function stay() {
+
+    // This is where my error is. The back card should change to the card image stored in hidden - which is not happening for some reason.
+    document.getElementById('hidden').src = ('./cards/' + hidden + '.png');
+
+
+    console.log(hidden);
+
+    // loop for giving the dealer cards until he reaches 17
+    while (dealerSum < 17) {
+        let newCardImage = document.createElement("img");
+        let card = deck.pop();
+        newCardImage.src = "./cards/" + card + ".png";
+        dealerSum += getValue(card);
+        dealerAceCount += checkAce(card);
+        document.getElementById("dealerHand").append(newCardImage);
+    }
+
     dealerSum = decreaseAceValue(dealerSum, dealerAceCount);
     yourSum = decreaseAceValue(yourSum, yourAceCount);
 
     canHit = false;
-    document.getElementById("hidden").src = "./cards/" + hidden + ".png";
 
     let outputMessage = "";
 
