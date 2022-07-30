@@ -208,7 +208,7 @@ function hit() {
     
 }
 
-//this function is for decreasing the value of your ace if player count exceeds 21. returns new count of the player after ace value change.
+//this function is for decreasing the value of your ace if player count exceeds 21. returns new count of the player/dealer after ace value change.
 function decreaseAceValue(yourSum, yourAceValue) {
 
     /**
@@ -228,7 +228,7 @@ function decreaseAceValue(yourSum, yourAceValue) {
 // this function is triggered when the stay button is pressed. This is to show the dealer's hand
 function stay() {
 
-    // This is where my error is. The back card should change to the card image stored in hidden - which is not happening for some reason.
+    // changes the img of the hidden card from the back to the front
     hiddenCardImage.src = ('./cards/' + hidden + '.png');
 
     // statement for checking whether the hidden card is stored or not
@@ -244,13 +244,15 @@ function stay() {
         document.getElementById("dealerHand").append(newCardImage);
     }
 
-    dealerSum = decreaseAceValue(dealerSum, dealerAceCount);
-    yourSum = decreaseAceValue(yourSum, yourAceCount);
+    dealerSum = decreaseAceValue(dealerSum, dealerAceCount); // to check to see if the dealer has any aces left, returns final count
 
-    canHit = false;
+    yourSum = decreaseAceValue(yourSum, yourAceCount); // to check to see if you have any aces left, returns final count
 
-    let outputMessage = "";
+    canHit = false; // set canHit to false
 
+    let outputMessage = ""; //variable storing output message
+
+    // code determining win and loss conditions
     if (yourSum > 21) {
         message = "you lose!";
     } else if (dealerSum > 21) {
@@ -268,6 +270,7 @@ function stay() {
     }
 
 
+    // statements outputing player score, dealer score, and final game result. 
     document.getElementById("dealerCount").innerHTML = dealerSum;
     document.getElementById("yourCount").innerHTML = yourSum;
     document.getElementById("outcome").innerHTML = message;
